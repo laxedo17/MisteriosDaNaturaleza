@@ -1,0 +1,68 @@
+﻿@model MisteriosDaNaturaleza.Modelos.ImaxesWeb
+
+@{
+    var titulo = "Engadir Imaxes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" asp-action="ActualInsertar" enctype="multipart/form-data">
+    <div class="row px-2 mx-2 backgroundWhite" border>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.Id != 0) //isto significa que a paxina e para Editar unha categoria, non para creala
+        {
+            <input type="hidden" asp-for="Id" />//Id para facer POST, obter un dato e facer cambios
+            titulo = "Editar Imaxes"; //isto cambia dinamicamente segun o que fagamos
+        }
+
+        <div class="col-12">
+            <h2 class="text-primary">@titulo</h2>
+            <br />
+        </div>
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Nome"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Nome" class="form-control" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Imaxe"></label>
+                </div>
+                <div class="col-8">
+                    <input type="file" id="imaxeProxecto" name="files" multiple class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+                    @if (Model.Id != 0)
+                    {
+                        //Boton Editar e Volver a Lista
+                        <partial name="_BotonEditarEVolverALista" model="Model.Id" />
+                    }
+                    else
+                    {
+                        //Boton Crear e Volver a Lista
+                        <partial name="_BotonCrearEVolverALista" />
+                    }
+                </div>
+            </div>
+        </div>
+        @if (Model.Imaxe != null)
+        {
+    <div class="col-4">
+        @{
+            var base64 = Convert.ToBase64String(Model.Imaxe);
+            var srcImx = string.Format("data:image/jpg;base64,{0}", base64);
+        }
+        <img src="@srcImx" width="auto" height="auto" />
+    </div>
+    }
+
+
+
+    </div>
+</form>

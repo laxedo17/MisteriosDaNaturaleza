@@ -1,0 +1,57 @@
+﻿@model MisteriosDaNaturaleza.Modelos.Categoria
+
+@{
+    var titulo = "Crear Categoria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" asp-action="ActualInsertar">
+    <div class="row px-2 mx-2 backgroundWhite" border>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.Id != 0) //isto significa que a paxina e para Editar unha categoria, non para creala
+        {
+            <input type="hidden" asp-for="Id" />//Id para facer POST, obter un dato e facer cambios
+            titulo = "Editar Categoria"; //isto cambia dinamicamente segun o que fagamos
+        }
+
+        <div class="col-12">
+            <h2 class="text-primary">@titulo</h2>
+            <br />
+        </div>
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Nome"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Nome" class="form-control" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="OrdeDeExposicion"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="OrdeDeExposicion" class="form-control" />
+                    <span asp-validation-for="OrdeDeExposicion" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+                    @if (Model.Id != 0)
+                    {
+                        //Boton Editar e Volver a Lista
+                        <partial name="_BotonEditarEVolverALista" model="Model.Id" />
+                    }
+                    else
+                    {
+                        //Boton Crear e Volver a Lista
+                        <partial name="_BotonCrearEVolverALista" />
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

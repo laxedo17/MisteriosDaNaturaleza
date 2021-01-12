@@ -1,0 +1,106 @@
+﻿@using MisteriosDaNatureza.Utilidades
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using MisteriosDaNaturaleza.Extensions <!--Fainos falta porque terremos un array cunha lista-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Misterios Da Natureza</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+</head>
+<body class="search-background">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" asp-area="Cliente" asp-controller="Home" asp-action="Index">Misterios Da Natureza</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Cliente" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+
+                        @if (User.IsInRole(DE.Supervisor) || User.IsInRole(DE.Admin))
+                        {
+                            //So se os usuarios son admin ou supervisor poden ver este menu. De todas formas, esto non impide que se sabemos a url, calquera poida entrar, e para iso necesitamos Authorization
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Xestion de contido
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropDown">
+                                    <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Categoria" asp-action="Index">Categoria</a>
+                                    <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Frecuencia" asp-action="Index">Frecuencia</a>
+                                    <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Destino" asp-action="Index">Destino</a>
+                                    <a class="dropdown-item text-white" asp-area="Admin" asp-controller="ImaxesWeb" asp-action="Index">Subir imaxes a Base de Datos</a>
+                                    @if (User.IsInRole(DE.Admin)) //so o Admin pode ver a seccion usuarios
+                                    {
+                                        <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Usuario" asp-action="Index">Usuario</a>
+                                    }
+                                    <a class="dropdown-item text-white" asp-area="Admin" asp-controller="Pedido" asp-action="Index">Pedido</a>
+                                </div>
+                            </li>
+                        }
+
+                        @if (HttpContextAccessor.HttpContext.Session.GetObxeto<List<int>>(DE.CarroSesion) != null)
+                        {
+                            <li style="color:white">
+                                <a asp-area="Cliente" asp-controller="Carro" asp-action="Index" class="nav-link text-white">
+                                    @{
+                                        var conta = HttpContextAccessor.HttpContext.Session.GetObxeto<List<int>>(DE.CarroSesion).Count;
+                                    }
+                                    <i class="fas fa-shopping-cart"></i>&nbsp; (@conta)
+                                </a>
+                            </li>
+                        }
+                        else //se o carro esta valeiro podemos poñer href # porque non imos a ningunha parte
+                        {
+                            <li style="color:white">
+                                <a href="#" class="nav-link text-white">
+                                    <!--non necesitamos a conta-->
+                                    <i class="fas fa-shopping-cart"></i>&nbsp; (0)
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+                <partial name="_LoginPartial" />
+            </div>
+        </nav>
+    </header>
+    <div class="container my-3">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer  bg-primary text-white">
+        <div class="container">
+            &copy; 2021 - Misterios Da Natureza
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script src="https://kit.fontawesome.com/dc96e20291.js" crossorigin="anonymous"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

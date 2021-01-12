@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20210107190316_AddFrecuenciaToDatabase.cs" />
+    <Compile Remove="Migrations\20210107190316_AddFrecuenciaToDatabase.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Data\appsettings.Development.json" />
+    <None Remove="Data\appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Data\appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MisteriosDaNatureza.Modelos\MisteriosDaNaturaleza.Modelos.csproj" />
+    <ProjectReference Include="..\MisteriosDaNatureza.Utilidades\MisteriosDaNatureza.Utilidades.csproj" />
+  </ItemGroup>
+
+</Project>

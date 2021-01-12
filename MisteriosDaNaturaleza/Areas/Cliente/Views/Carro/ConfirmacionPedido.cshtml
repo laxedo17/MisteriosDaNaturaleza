@@ -1,0 +1,21 @@
+﻿@model int 
+    @*O modelo e simplemente un enteiro int, que e o que lle pasamos o metodo coa Id coa que realizamos o pedido*@
+@{
+    ViewData["Title"] = "Confirmacion de Pedido";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container row">
+    <div class="col-12 text-center">
+        <h1 class="text-primary text-center">Solicitude de pedido enviada</h1><br />
+        <img src="~/imaxes/masai-mara-kenya.jpg" width="95%" />
+    </div>
+    <div class="col-12 text-center" style="color:maroon">
+        <br />
+        <br />
+        Gracias por realizar o pedido e ata pronto, dios cho pague.<br />
+        Recibimos o teu pedido e o noso equipo informarate pronto sobre como vai.
+        <br />
+        O teu Numero de Pedido e: @Model
+    </div>
+</div>

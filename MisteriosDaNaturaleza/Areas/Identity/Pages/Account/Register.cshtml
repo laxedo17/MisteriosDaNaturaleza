@@ -1,0 +1,118 @@
+﻿@page
+@model RegisterModel
+@using MisteriosDaNatureza.Utilidades 
+@{
+    ViewData["Title"] = "Rexistro";
+}
+
+<h1>Rexistrar novo marchante</h1>
+
+<div class="row backgroundWhite border">
+    <div class="col-md-12">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4>Crear conta.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Input.Nome"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Input.Nome" class="form-control" />
+                    <span asp-validation-for="Input.Nome" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Input.Email"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Input.NumeroTelefono">Numero Telefono</label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Input.NumeroTelefono" class="form-control" />
+                    <span asp-validation-for="Input.NumeroTelefono" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Input.Rua"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Input.Rua" class="form-control" />
+                    <span asp-validation-for="Input.Rua" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Input.Poboacion"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Input.Poboacion" class="form-control" />
+                    <span asp-validation-for="Input.Poboacion" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Input.Provincia"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Input.Provincia" class="form-control" />
+                    <span asp-validation-for="Input.Provincia" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Input.CodigoPostal">Codigo Postal</label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Input.CodigoPostal" class="form-control" />
+                    <span asp-validation-for="Input.CodigoPostal" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Input.Password"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Input.ConfirmPassword">Confirmar password</label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+
+                </div>
+                <div class="col-5">
+                    <input type="radio" name="rdRolUsr" value="@DE.Admin" /> @DE.Admin
+                    <input type="radio" name="rdRolUsr" value="@DE.Supervisor" checked/> @DE.Supervisor
+                    @*Aqui van os botons para Supervisores e Admins, cuios valores tomamos do proxecto Utilidades que referenciamos arriba*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-5 offset-3">
+                    <button type="submit" class="btn btn-primary form-control">Rexistrarse</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

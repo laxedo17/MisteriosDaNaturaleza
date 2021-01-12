@@ -1,0 +1,96 @@
+﻿@model MisteriosDaNaturaleza.Modelos.ViewModelos.CarroViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<script runat="server">
+          void Button_Click (Object sender, EventArgs e)
+          {
+             Label1.Text = "Cantidade viaxantes " + viaxantes.SelectedIndex.ToString()
+                           + ", value: " + viaxantes.Value;
+          }
+    </script>*@
+
+<form action="/" method="post">
+    @if (Model.ListaDestinos.Count > 0)
+    {
+        <br />
+
+        <div class="backgroundWhite container">
+            <div class="card">
+                <div class="card-header bg-danger text-light ml-0 row container">
+                    <div class="col-12 d-none d-md-block col-md-6 pb-1">
+                        <i class="fas fa-shopping-cart"></i> &nbsp; Carro da compra
+                    </div>
+                    <div class="col-12 col-md-4 offset-md-2 text-right">
+                        <a asp-action="Index" asp-controller="Home" asp-area="Cliente" class="btn btn-outline-info form-control btn-sm">Lista de destinos</a>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    @*<select id="viaxantes">
+                            <option>Por favor indica a cantidade de xente que viaxa (maximo 10 personas)</option>
+                            <option value="1">1 persona</option>
+                            <option value="2">2 personas</option>
+                            <option value="3">3 personas</option>
+                            <option value="4">4 personas</option>
+                            <option value="5">5 personas</option>
+                            <option value="6">6 personas</option>
+                            <option value="7">7 personas</option>
+                            <option value="8">8 personas</option>
+                            <option value="9">9 personas</option>
+                            <option value="10">10 personas (maximo)</option>
+                        </select>
+                        <button onserverclick="Button_Click" runat="server" Text="Submit" />
+
+                        <asp:Label id="Label1" runat="server" />*@
+                    @{
+                        var totalPedido = 0.0;
+                    }
+                    @*@Html.DropDownList("Viaxantes",
+                        Html.GetEnumSelectList<Model.Viaxantes>(),
+                        "Numero de viaxantes", new { @class = "form-control" })*@
+
+                    @foreach (var elemento in Model.ListaDestinos)
+                    {
+                        totalPedido += (elemento.Precio * elemento.Frecuencia.ContaFrecuencia);
+                        <div class="row">
+                            <div class="d-none d-md-block col-md-2 text-center py-2">
+                                <img src="@elemento.ImaxeUrl" class="rounded" width="100%" alt="Alternate Text" />
+                            </div>
+                            <div class="col-12 col-md-5 text-md-left pt-3">
+                                <h5><strong class="text-primary">@elemento.Nome</strong></h5>
+                                <h5 class="text-secondary">@elemento.Precio € por persona</h5>
+                                <h5 class="text-secondary">
+                                    <small>@elemento.Frecuencia.Nome</small>
+                                </h5>
+                            </div>
+                            <div class="col-12 col-md-5 row pt-3">
+                                <div class="col-6 text-md-right" style="padding-top:5px;">
+                                    <h6><strong class="text-danger">@(elemento.Precio * elemento.Frecuencia.ContaFrecuencia + "€")</strong></h6>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <button type="submit" class="btn btn-outline-dark" asp-action="Eliminar" asp-route-idDestino="@elemento.Id"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="col-12 text-right pr-4">
+                            <p class="text-success h5">Total (Euros): &nbsp; &nbsp; @totalPedido € </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 text-right">
+                        <a asp-action="Resumen" asp-area="Cliente" asp-controller="Carro" class="btn btn-success" form-control>Resumen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="backgroundWhite">Non hai viaxes solicitados.</div>
+    }
+</form>
+

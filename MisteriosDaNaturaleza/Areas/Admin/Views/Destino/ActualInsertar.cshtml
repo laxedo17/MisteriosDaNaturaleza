@@ -1,0 +1,139 @@
+﻿@model MisteriosDaNaturaleza.Modelos.ViewModelos.DestinoVM
+
+@{
+    var titulo = "Crear Destino";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" asp-action="ActualInsertar" enctype="multipart/form-data">
+    <!--Se non se pone o enctype non poderemos tomar as imaxes que subimos na base de datos, isto e moi importante acordarse SEMPRE-->
+    <div class="row px-2 mx-2 backgroundWhite" border>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.Destino.Id != 0) //isto significa que a paxina e para Editar unha categoria, non para creala
+        {
+            <input type="hidden" asp-for="Destino.Id" />//Id para facer POST, obter un dato e facer cambios
+            titulo = "Editar Destino"; //isto cambia dinamicamente segun o que fagamos
+        }
+
+        <div class="col-12">
+            <h2 class="text-primary">@titulo</h2>
+            <br />
+        </div>
+        <div class="col-9">
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Destino.Nome"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Destino.Nome" class="form-control" />
+                    <span asp-validation-for="Destino.Nome" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Destino.Precio"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Destino.Precio" id="txtPrecio" class="form-control" />
+                    <span asp-validation-for="Destino.Precio" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Destino.DescLonga"></label>
+                </div>
+                <div class="col-8">
+                    <textarea asp-for="Destino.DescLonga" class="form-control" style="height: 300px; "></textarea>
+                    <span asp-validation-for="Destino.DescLonga" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Destino.ImaxeUrl"></label>
+                </div>
+                <div class="col-8">
+                    <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Destino.FrecuenciaId"></label>
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.Destino.FrecuenciaId, Model.ListaFrecuencia, "- Por favor elixe unha frecuencia", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Destino.CategoriaId"></label>
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.Destino.CategoriaId, Model.ListaCategoria, "- Por favor elixe un tipo de viaxe", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+                    @if (Model.Destino.Id != 0)
+                    {
+                        //Boton Editar e Volver a Lista
+                        <partial name="_BotonEditarEVolverALista" model="Model.Destino.Id" />
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" onclick="return validarEntrada()" class="btn btn-primary form-control">Crear</button> <!--Se o return devolve false non se envia o formulario-->
+                            </div>
+                            <div class="col">
+                                <a asp-action="Index" class="btn btn-success form-control">Volver a Lista</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if(Model.Destino.Id != 0)
+        {
+    <div class="col-3">
+        <img src="@Model.Destino.ImaxeUrl" alt="Imaxen a subir" width="100%" style="border-radius:5px; border:1px solid #bbb9b9"/>
+
+    </div>
+        }
+    </div>
+</form>
+
+@section Scripts{ 
+    <script src="https://cdn.tiny.cloud/1/mjitstr0osrdfo7u6kiwm2nd7mst0k78tw2tsor37a8k0j5t/tinymce/5/tinymce.min.js">
+    </script><!--Script de Tinymce para editar o Campo descripcion e facelo mais bonito-->
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugin: 'lists',
+            menubar: 'file edit format'
+        }
+        )
+
+        function validarEntrada() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal("Error", "Por favor sube unha imaxe", "error")
+                return false;
+            }
+            return true;
+        };
+
+        $(document).ready(function () {
+            if (document.getElementById('txtPrecio').value == "0") {
+                document.getElementById('txtPrecio').value = '';
+            }
+        });
+    </script>
+}
