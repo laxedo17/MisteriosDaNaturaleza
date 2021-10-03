@@ -32,7 +32,6 @@ namespace MisteriosDaNaturaleza
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         //Este metodo usa Dependency Injection, que era opcional en ASP.NET clasico, en ASP.NET Core e parte integral
         /// <summary>
         /// Este metodo engade servicios a aplicacion para que esten disponibles e configurar a nosa app. E un metodo que se usa bastante na creacion de webs con ASP.NET
@@ -70,7 +69,6 @@ namespace MisteriosDaNaturaleza
             services.AddRazorPages();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// <summary>
         /// Configura o pipeline HTTP de ASP.NET. O pipeline manexa como a aplicacion debe responder as peticions HTTP. O pipeline esta composto de partes individuales chamadas middleware. Cando a aplicacion recibe esa peticion do navegador, recorre o pipeline e volve.
         /// 
